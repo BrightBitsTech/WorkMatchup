@@ -1,7 +1,10 @@
-﻿namespace webapi.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace webapi.Entities
 {
     public class CandidateEvaluation
     {
+        [JsonIgnore]
         public int Id { get; set; }
         public Account Candidate { get; set; }
         public int CandidateId { get; set; }

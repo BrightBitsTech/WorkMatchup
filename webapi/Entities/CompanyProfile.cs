@@ -1,7 +1,10 @@
-﻿namespace webapi.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace webapi.Entities
 {
     public class CompanyProfile
     {
+        [JsonIgnore]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Industry { get; set; }

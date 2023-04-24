@@ -1,9 +1,11 @@
-﻿using webapi.Entities.Enums;
+﻿    using System.Text.Json.Serialization;
+using webapi.Entities.Enums;
 
 namespace webapi.Entities
 {
     public class Application
     {
+        [JsonIgnore]
         public int Id { get; set; }
         public Account Account { get; set; }
         public int AccountId { get; set; }

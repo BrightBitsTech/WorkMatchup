@@ -28,20 +28,27 @@ namespace webapi.Services
 
             var pdfReader = new PdfReader(pdfStream);
             var pdfDocument = new PdfDocument(pdfReader);
-            var strategy = new LocationTextExtractionStrategy();
+            var nameRegex = new Regex(@"\b([A-Z][a-zęóąśłżźćń]+(?:-[A-Z][a-zęóąśłżźćń]+)?\s+)+([A-Z][a-zęóąśłżźćń]+(?:-[A-Z][a-zęóąśłżźćń]+)?\s+)+", RegexOptions.Multiline | RegexOptions.Compiled, TimeSpan.FromSeconds(1));
 
-            var pdfPage = pdfDocument.GetPage(1);
-            var content2 = strategy.GetResultantText();
-            var content = PdfTextExtractor.GetTextFromPage(pdfPage, strategy);
-            var nameRegex = new Regex(@"\b(\p{Lu}\p{Ll}+)\s+(\p{Lu}\p{Ll}+)\b");
-            var match = nameRegex.Match(content);
+            var firstName = "";
+            var lastName = "";
 
-            if (match.Success)
+            for (int i = 1; i <= pdfDocument.GetNumberOfPages(); i++)
             {
-                return (match.Groups[1].Value, match.Groups[2].Value);
+                var pdfPage = pdfDocument.GetPage(i);
+                var strategy = new SimpleTextExtractionStrategy();
+                var content = PdfTextExtractor.GetTextFromPage(pdfPage, strategy);
+
+                var match = nameRegex.Match(content);
+
+                if (match.Success)
+                {
+                    firstName = match.Groups[1].Value.Trim();
+                    lastName = match.Groups[2].Value.Trim();
+                }
             }
 
-            return (null, null);
+            return (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName)) ? (firstName, lastName) : (null, null);
         }
     }
 }

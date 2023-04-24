@@ -24,8 +24,13 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddHttpClient();
     services.AddScoped<IJwtUtils, JwtUtils>();
     services.AddScoped<IAccountService, AccountService>();
-    services.AddScoped<IEmailService, EmailService>();
     services.AddScoped<ICVParserService, CVParserService>();
+    services.AddScoped<IEmailService, EmailService>();
+    services.AddScoped<IJobOfferService, JobOfferService>();
+    services.AddScoped<INetworkService, NetworkService>();
+    services.AddScoped<IProfessionalEventService, ProfessionalEventService>();
+    services.AddScoped<ISkillsService, SkillsService>();
+    services.AddScoped<IUserRecommendationService, UserRecommendationService>();
 
 }
 var app = builder.Build();

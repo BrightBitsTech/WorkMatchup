@@ -6,6 +6,7 @@ namespace webapi.Entities
 {
     public class JobOffer
     {
+        public int Id { get; set; }
         public string CompanyName { get; set; }
         public string Industry { get; set; }
         public string JobTitle { get; set; }

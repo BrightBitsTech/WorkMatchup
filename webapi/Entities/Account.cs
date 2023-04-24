@@ -18,13 +18,30 @@ namespace webapi.Entities
         public string? City { get; set; }
         public int? Experience { get; set; }
         public string? Education { get; set; }
-        public List<Language>? Languages { get; set; }
-        public List<Skills>? Skills { get; set; }
-        public List<Interest>? Interests { get; set; }
         public Decimal? ExpectedSalary { get; set; }
         public EmploymentType? EmploymentType { get; set; }
         public byte[]? Cv { get; set; }
         public byte[]? Photo { get; set; }
+
+        // Additional navigation properties
+        public List<UserLanguage>? UserLanguages { get; set; }
+        public List<UserSkill>? UserSkills { get; set; }
+        public List<UserInterest>? UserInterests { get; set; }
+        public List<Application>? JobApplications { get; set; }
+        public List<Message>? Messages { get; set; }
+        public List<FavoriteJobOffer>? FavoriteJobOffers { get; set; }
+        public List<Interview>? Interviews { get; set; }
+        public List<Notification>? Notifications { get; set; }
+        public List<SavedJobSearch>? SavedJobSearches { get; set; }
+        public List<UserConnection>? UserConnections { get; set; }
+        public List<UserEndorsement>? UserEndorsements { get; set; }
+        public List<UserGroup>? UserGroups { get; set; }
+        public List<UserEventParticipation>? UserEventParticipations { get; set; }
+
+
+
+
+
         [JsonIgnore]
         public string PasswordHash { get; set; } = string.Empty;
 

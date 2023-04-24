@@ -6,6 +6,6 @@ namespace webapi.Entities.AccountDetails
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public KnowledgeLevel Level { get; set; }
+        public List<UserLanguage> UserLanguages { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using webapi.Entities;
+using webapi.Entities.AccountDetails;
 using webapi.Models;
 
 namespace webapi.Helpers
@@ -9,6 +10,11 @@ namespace webapi.Helpers
     {
         protected readonly IConfiguration Configuration;
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<JobOffer> JobOffers { get; set; }
+        public DbSet<Skills> Skills { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Network> Networks { get; set; }
+        public DbSet<ProfessionalEvent> ProfessionalEvents { get; set; }
 
 
         public DataContext(IConfiguration configuration)
