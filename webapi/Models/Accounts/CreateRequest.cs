@@ -27,28 +27,11 @@ namespace webapi.Models.Accounts
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
 
-        public int YearsOfExperience { get; set; }
-
-        [StringLength(500)]
-        public string ProgrammingLanguages { get; set; }
-
-        [StringLength(500)]
-        public string OtherSkills { get; set; }
-
-        [StringLength(100)]
-        public string City { get; set; }
-
-        [StringLength(100)]
-        public string Country { get; set; }
-
-        [Required]
-        public string Gender { get; set; }
 
         [Required]
         [EnumDataType(typeof(Role))]
         public string Role { get; set; }
-        [Required]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
 
     }

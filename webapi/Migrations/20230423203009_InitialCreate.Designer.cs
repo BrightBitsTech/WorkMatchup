@@ -12,7 +12,7 @@ using webapi.Helpers;
 namespace webapi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230423115836_InitialCreate")]
+    [Migration("20230423203009_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -33,30 +33,39 @@ namespace webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime?>("BirthDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("Country")
-                        .IsRequired()
+                    b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<byte[]>("Cv")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Education")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EmploymentType")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("ExpectedSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("Experience")
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OtherSkills")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -67,13 +76,11 @@ namespace webapi.Migrations
                     b.Property<DateTime?>("PasswordReset")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProgrammingLanguages")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ResetToken")
                         .HasColumnType("nvarchar(max)");
@@ -94,9 +101,6 @@ namespace webapi.Migrations
                     b.Property<DateTime?>("Verified")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("YearsOfExperience")
-                        .HasColumnType("int");
-
                     b.Property<int>("_AcceptTerms")
                         .HasColumnType("int")
                         .HasColumnName("AcceptTerms");
@@ -106,7 +110,7 @@ namespace webapi.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("webapi.Entities.JobApplication", b =>
+            modelBuilder.Entity("webapi.Entities.AccountDetails.Interest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,25 +118,21 @@ namespace webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AccountId")
+                    b.Property<int?>("AccountId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ApplicationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("JobOfferId")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
 
-                    b.HasIndex("JobOfferId");
-
-                    b.ToTable("JobApplication");
+                    b.ToTable("Interest");
                 });
 
-            modelBuilder.Entity("webapi.Entities.JobOffer", b =>
+            modelBuilder.Entity("webapi.Entities.AccountDetails.Language", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -140,37 +140,46 @@ namespace webapi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("RequiredSkills")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("YearsOfExperienceRequired")
+                    b.Property<int?>("AccountId")
                         .HasColumnType("int");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("JobOffer");
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("Language");
+                });
+
+            modelBuilder.Entity("webapi.Entities.AccountDetails.Skills", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("webapi.Entities.Account", b =>
@@ -230,33 +239,34 @@ namespace webapi.Migrations
                     b.Navigation("RefreshTokens");
                 });
 
-            modelBuilder.Entity("webapi.Entities.JobApplication", b =>
+            modelBuilder.Entity("webapi.Entities.AccountDetails.Interest", b =>
                 {
-                    b.HasOne("webapi.Entities.Account", "Account")
-                        .WithMany("JobApplications")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("webapi.Entities.Account", null)
+                        .WithMany("Interests")
+                        .HasForeignKey("AccountId");
+                });
 
-                    b.HasOne("webapi.Entities.JobOffer", "JobOffer")
-                        .WithMany("JobApplications")
-                        .HasForeignKey("JobOfferId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("webapi.Entities.AccountDetails.Language", b =>
+                {
+                    b.HasOne("webapi.Entities.Account", null)
+                        .WithMany("Languages")
+                        .HasForeignKey("AccountId");
+                });
 
-                    b.Navigation("Account");
-
-                    b.Navigation("JobOffer");
+            modelBuilder.Entity("webapi.Entities.AccountDetails.Skills", b =>
+                {
+                    b.HasOne("webapi.Entities.Account", null)
+                        .WithMany("Skills")
+                        .HasForeignKey("AccountId");
                 });
 
             modelBuilder.Entity("webapi.Entities.Account", b =>
                 {
-                    b.Navigation("JobApplications");
-                });
+                    b.Navigation("Interests");
 
-            modelBuilder.Entity("webapi.Entities.JobOffer", b =>
-                {
-                    b.Navigation("JobApplications");
+                    b.Navigation("Languages");
+
+                    b.Navigation("Skills");
                 });
 #pragma warning restore 612, 618
         }

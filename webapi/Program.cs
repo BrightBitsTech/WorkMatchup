@@ -21,10 +21,11 @@ var builder = WebApplication.CreateBuilder(args);
     services.AddAutoMapper(typeof(Program));
 
     services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
-
+    services.AddHttpClient();
     services.AddScoped<IJwtUtils, JwtUtils>();
     services.AddScoped<IAccountService, AccountService>();
     services.AddScoped<IEmailService, EmailService>();
+    services.AddScoped<ICVParserService, CVParserService>();
 
 }
 var app = builder.Build();
