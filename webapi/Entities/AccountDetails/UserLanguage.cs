@@ -4,6 +4,7 @@ namespace webapi.Entities.AccountDetails
 {
     public class UserLanguage
     {
+        public int Id { get; set; }
         public int AccountId { get; set; }
         public Account Account { get; set; }
         public int LanguageId { get; set; }

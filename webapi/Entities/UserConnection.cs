@@ -6,11 +6,11 @@ namespace webapi.Entities
     public class UserConnection
     {
         public int Id { get; set; }
-        public Account User { get; set; }
-        public int UserId { get; set; }
-        public Account ConnectedUser { get; set; }
-        public int ConnectedUserId { get; set; }
-        public DateTime DateConnected { get; set; }
+        public Account Requestor { get; set; }
+        public int RequestorId { get; set; }
+        public Account Requested { get; set; }
+        public int RequestedId { get; set; }
+        public DateTime ConnectionDate { get; set; }
         public ConnectionStatus Status { get; set; }
     }
 }

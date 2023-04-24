@@ -28,24 +28,22 @@ namespace webapi.Entities
         public List<UserSkill>? UserSkills { get; set; }
         public List<UserInterest>? UserInterests { get; set; }
         public List<Application>? JobApplications { get; set; }
-        public List<Message>? Messages { get; set; }
         public List<FavoriteJobOffer>? FavoriteJobOffers { get; set; }
-        public List<Interview>? Interviews { get; set; }
         public List<Notification>? Notifications { get; set; }
         public List<SavedJobSearch>? SavedJobSearches { get; set; }
-        public List<UserConnection>? UserConnections { get; set; }
-        public List<UserEndorsement>? UserEndorsements { get; set; }
         public List<UserGroup>? UserGroups { get; set; }
         public List<UserEventParticipation>? UserEventParticipations { get; set; }
-
-
-
-
+        public List<Interview>? CandidateInterviews { get; set; }
+        public List<Interview>? RecruiterInterviews { get; set; }
+        public List<Message>? SentMessages { get; set; }
+        public List<Message>? ReceivedMessages { get; set; }
+        public List<UserConnection>? RequestorConnections { get; set; }
+        public List<UserConnection>? RequestedConnections { get; set; }
+        public List<UserEndorsement>? GivenEndorsements { get; set; }
+        public List<UserEndorsement>? ReceivedEndorsements { get; set; }
 
         [JsonIgnore]
         public string PasswordHash { get; set; } = string.Empty;
-
-
 
         [Column("AcceptTerms")]
         public int _AcceptTerms { get; set; }
